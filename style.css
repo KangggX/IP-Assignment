@@ -1,0 +1,66 @@
+body {
+    margin: 0;
+    padding: 0;
+    color: #fff;
+    font-family: poppins, sans-serif;
+}
+
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+/***** Navbar *****/
+.navbar {
+    padding: 0;
+    min-height: 85px;
+}
+
+.navbar > .container {
+    max-width: 100%; /*Override bootstrap container max width in navbar*/
+    min-height: 85px;
+    padding: 10px 0;
+}
+
+.navbar-brand {
+    margin: 0 48px 0 36px;
+    font-family: acumin-pro, sans-serif;
+    font-size: 32px !important;
+}
+
+.navbar-dark .navbar-toggler {
+    border: none;
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    padding: 12px 0;
+    padding-left: 32px;
+    letter-spacing: 1px;
+}
+
+.navbar-toggler {
+    margin-right: 12px;
+}
+
+/***** Section *****/
+.section-wrapper {
+    padding: 50px 20px;
+}
+
+.main-bg {
+    width: 100%;
+    background-image: url(img/bg-1.png);
+    background-size: cover;
+    background-position: center;
+}
+
+@media screen and (max-width: 990px) {
+    .navbar-nav {
+        padding: 10px 0;
+    }
+
+    .navbar-collapse {
+        background-color: #2A2A2A;
+        margin-top: 20px;
+    }
+}
