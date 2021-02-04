@@ -44,20 +44,36 @@ body {
 }
 
 /***** Section *****/
-.section-1 {
+.section-1, .section-2 {
     position: relative;
 }
 
-.section-1::before {
+.section-1::before, .section-2::before {
     content: '';
     display: block;
     position: absolute;
+}
+
+.section-1::before {
     top: -9vw;
     right: 0;
     border-top: 4.5vw solid transparent;
     border-left: 4.5vw solid transparent;
     border-bottom: 4.5vw solid #FFF8F3;
     border-right: 4.5vw solid #FFF8F3;
+}
+
+.section-2 {
+    background-color: #0084F5;
+}
+
+.section-2::before {
+    top: 0;
+    left: 0;
+    border-top: 4.5vw solid #FFF8F3;
+    border-left: 4.5vw solid #FFF8F3;
+    border-bottom: 4.5vw solid transparent;
+    border-right: 4.5vw solid transparent;
 }
 
 .section-wrapper {
@@ -71,6 +87,14 @@ body {
 
 .section-wrapper.light {
     color: #001F39;
+}
+
+.section-wrapper.blue {
+    color: #fff;
+}
+
+.section-content {
+    display: block;
 }
 
 .section.main-bg::before, .section.main-bg::after {
@@ -144,9 +168,21 @@ h2.heading-title {
     font-size: 38px;
 }
 
-.section-body {
-    color: #404040;
+.section__body {
     font-weight: 500;
+    margin-top: 15px;
+}
+
+.section__body p {
+    font-size: 14px;
+}
+
+.light .section__body {
+    color: #404040;
+}
+
+.blue .section__body {
+    color: #fff;
 }
 
 /***** Details *****/
@@ -196,6 +232,14 @@ h2.heading-title {
         border-left: 64px solid transparent;
         border-bottom: 64px solid #FFF8F3;
         border-right: 64px solid #FFF8F3;
+    }
+
+    .section-2::before {
+        top: -64px;
+        border-top: 64px solid #FFF8F3;
+        border-left: 64px solid #FFF8F3;
+        border-bottom: 64px solid transparent;
+        border-right: 64px solid transparent;
     }
 }
 
