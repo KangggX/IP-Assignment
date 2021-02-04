@@ -2,6 +2,7 @@ body {
     margin: 0;
     padding: 0;
     color: #fff;
+    background-color: #FFF8F3;
     font-family: poppins, sans-serif;
 }
 
@@ -43,6 +44,22 @@ body {
 }
 
 /***** Section *****/
+.section-1 {
+    position: relative;
+}
+
+.section-1::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -9vw;
+    right: 0;
+    border-top: 4.5vw solid transparent;
+    border-left: 4.5vw solid transparent;
+    border-bottom: 4.5vw solid #FFF8F3;
+    border-right: 4.5vw solid #FFF8F3;
+}
+
 .section-wrapper {
     position: relative;
     padding: 70px 30px;
@@ -78,9 +95,19 @@ body {
 .main-bg {
     position: relative;
     width: 100%;
+    overflow: hidden;
+}
+
+.bg-blur {
+    position: absolute;
+    height: 100%;
+    width: 110%;
     background-image: url(img/bg-1.png);
     background-size: cover;
-    background-position: center;
+    background-position-x: -100px;
+    filter: blur(5px);
+    transform: scale(1.1);
+    z-index: -1;
 }
 
 .intro-header {
@@ -111,6 +138,67 @@ body {
     padding: 12px 55px;
 }
 
+h2.heading-title {
+    font-family: acumin-pro, sans-serif;
+    font-weight: 800;
+    font-size: 38px;
+}
+
+.section-body {
+    color: #404040;
+    font-weight: 500;
+}
+
+/***** Details *****/
+.details {
+    position: absolute;
+}
+
+.detailwork-1 {
+    top: 0;
+    left: 0;
+    height: 64px;
+    width: 100%;
+}
+
+.detailwork-1::before {
+    content: '';
+    display: block;
+    position: absolute;
+    background-color: #0084f5;
+    width: 240px;
+    height: 6px;
+}
+
+.detailwork-1::after {
+    content: '';
+    display: block;
+    position: absolute;
+    background-color: #0084f5;
+    right: 0;
+    bottom: 0;
+    height: 32px;
+    width: 32px;
+}
+
+.detailwork-2 {
+    background-color: #0084f5;
+    right: 0;
+    top: 278px;
+    width: 10px;
+    height: 10px;
+}
+
+@media screen and (min-width: 768px) {
+    .section-1::before {
+        top: -64px;
+        border-top: 64px solid transparent;
+        border-left: 64px solid transparent;
+        border-bottom: 64px solid #FFF8F3;
+        border-right: 64px solid #FFF8F3;
+    }
+}
+
 @media screen and (max-width: 990px) {
     .navbar-nav {
         padding: 10px 0;
@@ -119,5 +207,15 @@ body {
     .navbar-collapse {
         background-color: #2A2A2A;
         margin-top: 20px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .section-wrapper.main {
+        height: 34vw;
+    }
+
+    .button.home-page {
+        margin: 10px 0;
     }
 }
