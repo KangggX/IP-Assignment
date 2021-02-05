@@ -44,11 +44,11 @@ body {
 }
 
 /***** Section *****/
-.section-1, .section-2 {
+.section-1, .section-2, .section-3 {
     position: relative;
 }
 
-.section-1::before, .section-2::before {
+.section-1::before, .section-2::before, .section-3::before {
     content: '';
     display: block;
     position: absolute;
@@ -74,6 +74,14 @@ body {
     border-left: 4.5vw solid #FFF8F3;
     border-bottom: 4.5vw solid transparent;
     border-right: 4.5vw solid transparent;
+}
+
+.section-3::before {
+    top: -50px;
+    left: 0;
+    border-style: solid;
+    border-width: 50px 0 0 100vw;
+    border-color: transparent transparent transparent #FFF8F3;
 }
 
 .section-wrapper {
