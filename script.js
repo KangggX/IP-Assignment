@@ -35,24 +35,54 @@ Mapbox API for map usage
 
 var countryCoordinate = [];
 $.ajax(byCountries).done(function (response) {
+  console.log(response);
   for (i = 0; i < response.length; i++) {
-    countryCoordinate.push([`${response[i].countryInfo.long}, ${response[i].countryInfo.lat}`]);
+    countryCoordinate.push([`${response[i].countryInfo.long}`, `${response[i].countryInfo.lat}`]);
   }
-});
 
-mapboxgl.accessToken = 'pk.eyJ1IjoiazRuZ2dnIiwiYSI6ImNra2NwaG9rMzBneGwyd29sZjQ0ZDlnNW8ifQ.S5yJ6Rta3agYAdE9iNzDmw';
+  mapboxgl.accessToken = 'pk.eyJ1IjoiazRuZ2dnIiwiYSI6ImNra2NwaG9rMzBneGwyd29sZjQ0ZDlnNW8ifQ.S5yJ6Rta3agYAdE9iNzDmw';
   var map = new mapboxgl.Map({
-  container: 'map',
-  style: 'mapbox://styles/mapbox/light-v10',
-  maxZoom: 3
+    container: 'map',
+    style: 'mapbox://styles/mapbox/light-v10',
+    maxZoom: 3
+  });
+  
+  for (i = 0; i < countryCoordinate.length; i++) {
+    // Create the popup
+    var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+      `
+        <div style="font-size: 14px; font-weight: bold; margin-bottom: 1px;">${response[i].country}</div>
+        <b>Active Cases:</b> ${response[i].active} (+${response[i].todayCases})<br>
+        <b>Critical:</b> ${response[i].critical}<br>
+        <b>Deaths:</b> ${response[i].deaths} (+${response[i].todayDeaths})<br>
+        <b>Recovered:</b> ${response[i].recovered} (+${response[i].todayRecovered})<br>
+      `
+    );
+
+    // Create the marker
+    var el = document.createElement('div');
+    el.className = 'marker';
+    el.style.backgroundImage = `url(${response[i].countryInfo.flag})`;
+    
+    let tmpMarker = new mapboxgl.Marker(el)
+    .setLngLat(countryCoordinate[i]) // Set the marker coordinates
+    .setPopup(popup) // Set a popup on the marker
+    .addTo(map); // Add the marker to the map
+
+    el.markerInstance = tmpMarker;
+    el.addEventListener("click", e => {
+      let coords = e.target.markerInstance.getLngLat();
+
+      map.flyTo({
+        center: coords,
+        speed: 0.5
+      });
+    });
+  }
+
+  // Add zoom and rotation controls to the map.
+  map.addControl(new mapboxgl.NavigationControl());
 });
 
-console.log(countryCoordinate[2]);
-var countryMarker = new mapboxgl.Marker()
-.setLngLat([countryCoordinate[2][0]])
-.addTo(map); // add the marker to the map
 
-
-// Add zoom and rotation controls to the map.
-map.addControl(new mapboxgl.NavigationControl());
 
