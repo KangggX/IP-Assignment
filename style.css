@@ -226,8 +226,6 @@ h2.heading-title {
 
 
 
-
-
 /***** For statistics page *****/
 .page-title {
     padding: 60px 50px 0 30px;
@@ -285,6 +283,27 @@ h2.heading-title {
     display: block;
 }
 
+
+
+
+/***** Mapbox API things *****/
+.marker {
+    background-size: cover;
+    background-position: center;
+    width: 25px;
+    height: 18px;
+    cursor: pointer;
+    image-rendering: pixelated;
+}
+
+.mapboxgl-popup {
+    max-width: 200px !important;
+}
+
+.mapboxgl-popup-content {
+    color: #212529;
+    padding: 10px 15px;
+}
 
 
 
