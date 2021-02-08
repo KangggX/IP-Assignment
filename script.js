@@ -1,6 +1,82 @@
+function endDate() { // Function to gather all the end days for each month since January 2020 in the format mm/dd/yy
+  var dateList = [];
+  var cYear = 2020;
+  var cMonth = 0;
+  var cDay = 1;
+  var currentDate = new Date();
+
+  for (var i = 0; i < 100; i++) {
+    if (cMonth == 12) {
+      cMonth = 0;
+      cYear += 1;
+    } else {
+      if ((cMonth == currentDate.getMonth() + 1) && (cYear == currentDate.getFullYear())) {
+        break // Breaks the loop if cMonth and cYear == the current month+1 and year we are in, in this case if cMonth and cYear == 3 and 2021
+      } else {
+        var date = new Date(cYear, cMonth, cDay);
+        var lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+        dateList.push(`${lastDay.getMonth() + 1}` + "/" + `${lastDay.getDate()}` + "/" + `${lastDay.getYear().toString().substr(-2)}`);
+        cMonth += 1;
+      }
+    }
+  }
+
+  return dateList
+}
+
+function chartCountry() {
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      datasets: [{
+        label: '# of Votes',
+        data: [12, 19, 3, 5, 2, 3],
+        fill: false,
+        borderColor: [
+          'rgba(255, 99, 132, 1)',
+          'rgba(54, 162, 235, 1)',
+          'rgba(255, 206, 86, 1)',
+          'rgba(75, 192, 192, 1)',
+          'rgba(153, 102, 255, 1)',
+          'rgba(255, 159, 64, 1)'
+        ],
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+
+  return myChart
+}
+
+
+
 /*
 COVID-19 API by continent and country
 */
+
+function historicalData(country) {
+  var countryHistory = {
+    "url": "https://corona.lmao.ninja/v2/historical/" + country + "?lastdays=all",
+    "method": "GET",
+    "timeout": 0,
+    "headers": {
+      "Cookie": "__cfduid=d0d426a70ca4abcce452e894a8bd604a81611927172"
+    },
+  };
+
+  return countryHistory
+}
 
 var byContinent = {
   "url": "https://corona.lmao.ninja/v2/continents?sort&yesterday=false",
@@ -44,14 +120,15 @@ $.ajax(byCountries).done(function (response) {
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/mapbox/light-v10',
-    maxZoom: 3
+    minZoom: 2,
+    maxZoom: 8
   });
   
   for (i = 0; i < countryCoordinate.length; i++) {
     // Create the popup
     var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
       `
-        <div style="font-size: 14px; font-weight: bold; margin-bottom: 1px;">${response[i].country}</div>
+        <div class="country-name" style="font-size: 14px; font-weight: bold; margin-bottom: 1px;">${response[i].country}</div>
         <b>Active Cases:</b> ${response[i].active} (+${response[i].todayCases})<br>
         <b>Critical:</b> ${response[i].critical}<br>
         <b>Deaths:</b> ${response[i].deaths} (+${response[i].todayDeaths})<br>
@@ -63,19 +140,29 @@ $.ajax(byCountries).done(function (response) {
     var el = document.createElement('div');
     el.className = 'marker';
     el.style.backgroundImage = `url(${response[i].countryInfo.flag})`;
-    
+
     let tmpMarker = new mapboxgl.Marker(el)
     .setLngLat(countryCoordinate[i]) // Set the marker coordinates
     .setPopup(popup) // Set a popup on the marker
     .addTo(map); // Add the marker to the map
 
     el.markerInstance = tmpMarker;
-    el.addEventListener("click", e => {
+    el.markerInformation = popup
+    el.addEventListener("click", function(e) {
       let coords = e.target.markerInstance.getLngLat();
+      let info = e.target.markerInformation._content.getElementsByClassName("country-name")[0].textContent;
+
+      $.ajax(historicalData(info)).done(function (response) {
+        let historyCases = response.timeline.cases;
+
+        for (i = 0; i < endDate().length - 1; i++) {
+          console.log(historyCases[endDate()[i]]);
+        }
+        
+      });
 
       map.flyTo({
-        center: coords,
-        speed: 0.5
+        center: coords
       });
     });
   }
@@ -83,6 +170,8 @@ $.ajax(byCountries).done(function (response) {
   // Add zoom and rotation controls to the map.
   map.addControl(new mapboxgl.NavigationControl());
 });
+
+
 
 
 
