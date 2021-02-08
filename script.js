@@ -24,24 +24,17 @@ function endDate() { // Function to gather all the end days for each month since
   return dateList
 }
 
-function chartCountry() {
+function chartCountry(cDate, cData) {
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
-    type: 'line',
+    type: "line",
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+      labels: cDate,
       datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
+        label: "Total Cases",
+        data: cData,
         fill: false,
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)'
-        ],
+        borderColor: "rgba(255, 99, 132, 1)",
         borderWidth: 1
       }]
     },
@@ -70,9 +63,6 @@ function historicalData(country) {
     "url": "https://corona.lmao.ninja/v2/historical/" + country + "?lastdays=all",
     "method": "GET",
     "timeout": 0,
-    "headers": {
-      "Cookie": "__cfduid=d0d426a70ca4abcce452e894a8bd604a81611927172"
-    },
   };
 
   return countryHistory
@@ -82,18 +72,12 @@ var byContinent = {
   "url": "https://corona.lmao.ninja/v2/continents?sort&yesterday=false",
   "method": "GET",
   "timeout": 0,
-  "headers": {
-    "Cookie": "__cfduid=d0d426a70ca4abcce452e894a8bd604a81611927172"
-  },
 };
 
 var byCountries = {
   "url": "https://corona.lmao.ninja/v2/countries?sort&yesterday",
   "method": "GET",
   "timeout": 0,
-  "headers": {
-    "Cookie": "__cfduid=d9380a3e9f1eaf698e12001d8e156801f1611803835"
-  },
 };
 
 var covidGlobal;
@@ -106,15 +90,34 @@ $.ajax(byContinent).done(function (response) {
 
 
 /*
-Mapbox API for map usage
+Mapbox API and ChartJS
 */
 
-var countryCoordinate = [];
+chartCountry(0, 0);
+var countryName = []; // Set global variable countryName
+var countryCoordinate = []; // Set global variable countryCoordinate
+var globalCases = []; // Set global variable globalCases
+
 $.ajax(byCountries).done(function (response) {
   console.log(response);
+
   for (i = 0; i < response.length; i++) {
+    countryName.push(response[i].country);
     countryCoordinate.push([`${response[i].countryInfo.long}`, `${response[i].countryInfo.lat}`]);
   }
+
+
+
+  
+
+  
+    for (j = 0; j < countryName.length; j++) {
+      $.ajax(historicalData(countryName[j])).done(function (response) {
+        
+        console.log(response);
+      });
+    }
+
 
   mapboxgl.accessToken = 'pk.eyJ1IjoiazRuZ2dnIiwiYSI6ImNra2NwaG9rMzBneGwyd29sZjQ0ZDlnNW8ifQ.S5yJ6Rta3agYAdE9iNzDmw';
   var map = new mapboxgl.Map({
@@ -154,11 +157,15 @@ $.ajax(byCountries).done(function (response) {
 
       $.ajax(historicalData(info)).done(function (response) {
         let historyCases = response.timeline.cases;
+        let historyCasesArray = [];
+        let dateArray = [];
 
         for (i = 0; i < endDate().length - 1; i++) {
-          console.log(historyCases[endDate()[i]]);
+          historyCasesArray.push(historyCases[endDate()[i]]);
+          dateArray.push(endDate()[i]);
         }
-        
+        chartCountry(dateArray, historyCasesArray);
+
       });
 
       map.flyTo({
@@ -170,6 +177,7 @@ $.ajax(byCountries).done(function (response) {
   // Add zoom and rotation controls to the map.
   map.addControl(new mapboxgl.NavigationControl());
 });
+
 
 
 
