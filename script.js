@@ -93,7 +93,7 @@ $.ajax(byContinent).done(function (response) {
 Mapbox API and ChartJS
 */
 
-chartCountry(0, 0);
+chartCountry(0, 0); // Initiate the chart first with an X and Y axis value of 0
 var countryName = []; // Set global variable countryName
 var countryCoordinate = []; // Set global variable countryCoordinate
 var globalCases = []; // Set global variable globalCases
@@ -111,12 +111,13 @@ $.ajax(byCountries).done(function (response) {
   
 
   
-    for (j = 0; j < countryName.length; j++) {
-      $.ajax(historicalData(countryName[j])).done(function (response) {
-        
-        console.log(response);
-      });
-    }
+  for (j = 0; j < countryName.length; j++) {
+    console.log(j);
+    $.ajax(historicalData(countryName[j])).done(function (response) {
+      
+      console.log(response);
+    });
+  }
 
 
   mapboxgl.accessToken = 'pk.eyJ1IjoiazRuZ2dnIiwiYSI6ImNra2NwaG9rMzBneGwyd29sZjQ0ZDlnNW8ifQ.S5yJ6Rta3agYAdE9iNzDmw';
@@ -178,7 +179,7 @@ $.ajax(byCountries).done(function (response) {
   map.addControl(new mapboxgl.NavigationControl());
 });
 
-
+console.log("test");
 
 
 
