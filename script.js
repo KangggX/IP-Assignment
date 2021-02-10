@@ -1,3 +1,10 @@
+function spaceChecker(word) { // To check for space(s) in a word and replace it with a hyphen e.g. Plastic Bag ---> Plastic-Bag
+  let changedWord = word;
+  changedWord = changedWord.replace(/\s+/g, '-');
+  
+  return changedWord
+}
+
 function endDate() { // Function to gather all the end days for each month since January 2020 in the format mm/dd/yy
   var dateList = [];
   var cYear = 2020;
@@ -92,95 +99,93 @@ $.ajax(byContinent).done(function (response) {
 /*
 Mapbox API and ChartJS
 */
-
+test();
 chartCountry(0, 0); // Initiate the chart first with an X and Y axis value of 0
-var countryName = []; // Set global variable countryName
-var countryCoordinate = []; // Set global variable countryCoordinate
-var globalCases = []; // Set global variable globalCases
+const countryName = []; // Set global variable countryName
+const countryCoordinate = []; // Set global variable countryCoordinate
 
-$.ajax(byCountries).done(function (response) {
-  console.log(response);
+mapboxgl.accessToken = 'pk.eyJ1IjoiazRuZ2dnIiwiYSI6ImNra2NwaG9rMzBneGwyd29sZjQ0ZDlnNW8ifQ.S5yJ6Rta3agYAdE9iNzDmw';
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/light-v10',
+  minZoom: 2,
+  maxZoom: 8
+});
 
-  for (i = 0; i < response.length; i++) {
-    countryName.push(response[i].country);
-    countryCoordinate.push([`${response[i].countryInfo.long}`, `${response[i].countryInfo.lat}`]);
-  }
+async function test() {
+  $.ajax(byCountries).done(function (response) {
+    console.log(response);
+
+    for (i = 0; i < response.length; i++) {
+      countryName.push(response[i].country);
+      countryCoordinate.push([`${response[i].countryInfo.long}`, `${response[i].countryInfo.lat}`]);
+    }
+
+    for (i = 0; i < countryName.length; i++) {
+      $("#country-selection").append(`<option value=${spaceChecker(countryName[i])}>${countryName[i]}</option>`);
+    }
 
 
-
-  
-
-  
-  for (j = 0; j < countryName.length; j++) {
-    console.log(j);
-    $.ajax(historicalData(countryName[j])).done(function (response) {
-      
-      console.log(response);
-    });
-  }
-
-
-  mapboxgl.accessToken = 'pk.eyJ1IjoiazRuZ2dnIiwiYSI6ImNra2NwaG9rMzBneGwyd29sZjQ0ZDlnNW8ifQ.S5yJ6Rta3agYAdE9iNzDmw';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/mapbox/light-v10',
-    minZoom: 2,
-    maxZoom: 8
-  });
-  
-  for (i = 0; i < countryCoordinate.length; i++) {
-    // Create the popup
-    var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
-      `
+    for (i = 0; i < countryCoordinate.length; i++) {
+      // Create the popup
+      var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(
+        `
         <div class="country-name" style="font-size: 14px; font-weight: bold; margin-bottom: 1px;">${response[i].country}</div>
         <b>Active Cases:</b> ${response[i].active} (+${response[i].todayCases})<br>
         <b>Critical:</b> ${response[i].critical}<br>
         <b>Deaths:</b> ${response[i].deaths} (+${response[i].todayDeaths})<br>
         <b>Recovered:</b> ${response[i].recovered} (+${response[i].todayRecovered})<br>
       `
-    );
+      );
 
-    // Create the marker
-    var el = document.createElement('div');
-    el.className = 'marker';
-    el.style.backgroundImage = `url(${response[i].countryInfo.flag})`;
+      // Create the marker
+      let el = document.createElement("div");
+      el.className = "marker";
+      el.id = `${spaceChecker(response[i].country)}`;
+      el.style.backgroundImage = `url(${response[i].countryInfo.flag})`;
 
-    let tmpMarker = new mapboxgl.Marker(el)
-    .setLngLat(countryCoordinate[i]) // Set the marker coordinates
-    .setPopup(popup) // Set a popup on the marker
-    .addTo(map); // Add the marker to the map
+      let tmpMarker = new mapboxgl.Marker(el)
+        .setLngLat(countryCoordinate[i]) // Set the marker coordinates
+        .setPopup(popup) // Set a popup on the marker
+        .addTo(map); // Add the marker to the map
 
-    el.markerInstance = tmpMarker;
-    el.markerInformation = popup
-    el.addEventListener("click", function(e) {
-      let coords = e.target.markerInstance.getLngLat();
-      let info = e.target.markerInformation._content.getElementsByClassName("country-name")[0].textContent;
+      el.markerInstance = tmpMarker;
+      el.markerInformation = popup;
 
-      $.ajax(historicalData(info)).done(function (response) {
-        let historyCases = response.timeline.cases;
-        let historyCasesArray = [];
-        let dateArray = [];
+      el.addEventListener("click", function (e) {
+        let coords = e.target.markerInstance.getLngLat();
+        let info = e.target.markerInformation._content.getElementsByClassName("country-name")[0].textContent;
 
-        for (i = 0; i < endDate().length - 1; i++) {
-          historyCasesArray.push(historyCases[endDate()[i]]);
-          dateArray.push(endDate()[i]);
-        }
-        chartCountry(dateArray, historyCasesArray);
+        $("#country-selection").val(`${spaceChecker(info)}`); // Changes the option value to the "clicked" value
 
+        $.ajax(historicalData(info)).done(function (response) {
+          let historyCases = response.timeline.cases;
+          let historyCasesArray = [];
+          let dateArray = [];
+
+          for (i = 0; i < endDate().length - 1; i++) {
+            historyCasesArray.push(historyCases[endDate()[i]]);
+            dateArray.push(endDate()[i]);
+          }
+          chartCountry(dateArray, historyCasesArray);
+
+        });
+
+        map.flyTo({
+          center: coords
+        });
       });
 
-      map.flyTo({
-        center: coords
-      });
+    }
+
+    $("#country-selection").change(function(e) { // If user selected an option from the drop-down menu,
+      $(`#${spaceChecker(this.value)}`).trigger("click"); // To simulate a "click"
     });
-  }
 
-  // Add zoom and rotation controls to the map.
-  map.addControl(new mapboxgl.NavigationControl());
-});
-
-console.log("test");
-
+    // Add zoom and rotation controls to the map.
+    map.addControl(new mapboxgl.NavigationControl());
+  });
+}
 
 
 
