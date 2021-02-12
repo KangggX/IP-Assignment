@@ -36,7 +36,8 @@
                             
                         </div>
                         <form class="form-inline">
-                            <a class="btn btn-outline-success" href="sign-in.html">SIGN IN</a>
+                            <a class="btn btn-outline-success" id="in" href="sign-in.html">SIGN IN</a>
+                            <button class="btn btn-outline-success" id="out" style="display: none;">SIGN OUT</button>
                         </form>
                         
                     </div>
@@ -74,5 +75,31 @@
         <script src='https://api.mapbox.com/mapbox-gl-js/v2.1.0/mapbox-gl.js'></script>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
         <script src="script.js"></script>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-app.js"></script>
+
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+            https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-analytics.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.2.7/firebase-firestore.js"></script>
+
+        <script>
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            var firebaseConfig = {
+                apiKey: "AIzaSyAMGIbkZYAiIw_ENmnNZLtqUTrKWdbQTd8",
+                authDomain: "integrated-project-c1c3b.firebaseapp.com",
+                projectId: "integrated-project-c1c3b",
+                storageBucket: "integrated-project-c1c3b.appspot.com",
+                messagingSenderId: "485212604970",
+                appId: "1:485212604970:web:6f2b29f2416c25a1161153",
+                measurementId: "G-SM66PB8P5Y"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+        </script>
+        <script src="verification.js"></script>
     </body>
 </html>
