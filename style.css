@@ -273,7 +273,7 @@ h2.heading-title {
     position: relative;
     background-color: #fff;
     width: 100%;
-    padding: 75px 55px;
+    padding: 90px 55px;
     flex-grow: 1;
     flex-direction: column;
     align-items: center;
@@ -291,10 +291,25 @@ h2.heading-title {
     font-weight: 600;
 }
 
+.form__error, .field__error--first, .field__error--second {
+    display: none;
+    color: black;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.field__error--first, .field__error--second {
+    text-align: left;
+    font-size: 14px;
+}
+
 .form__fields {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    width: 100%;
 }
 
 .field__input {
@@ -303,7 +318,7 @@ h2.heading-title {
 
 .field__input input {
     width: 100%;
-    padding: 15px;
+    padding: 25px 20px;
     background-color: rgba(117, 117, 177, 0.15);
     border: none;
     border-radius: 3px;
@@ -313,16 +328,16 @@ h2.heading-title {
     position: absolute;
     color: #404040;
     top: 50%;
-    left: 15px;
+    left: 20px;
     transform: translateY(-50%);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
     pointer-events: none;
     transition: 0.15s all ease-in-out;
 }
 
-.field__input--email:focus + .field__label, .field__input--password:focus + .field__label, .field__input--non-empty {
+.field__input--email:focus + .field__label, .field__input--password:focus + .field__label, .field__input--non-empty + .field__label {
     opacity: 0;
 }
 
@@ -330,6 +345,7 @@ h2.heading-title {
     display: flex;
     flex-direction: column;
     margin-top: 80px;
+    font-size: 20px;
 }
 
 .submission__button {
@@ -344,7 +360,7 @@ h2.heading-title {
     text-align: center;
     color: rgba(64, 64, 64, 0.85);
     margin-top: 5px;
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 1px;
     text-decoration: none;
