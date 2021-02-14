@@ -15,7 +15,7 @@ function formCheck(e) {
 
 // Check if password value length is > 6
 function lengthCheck(e) {
-    if (e.value.length < "6") {
+    if ((e.value.length < "6") && e.value.length > "0") {
         $(".field__error--first").css("display", "block");
     } else {
         $(".field__error--first").css("display", "none");
@@ -24,7 +24,7 @@ function lengthCheck(e) {
 
 // Check if password and confirmed password value are equal
 function pwCheck() {
-    if (signUpPassword1.val() != signUpPassword2.val()) {
+    if ((signUpPassword1.val() != signUpPassword2.val()) && (signUpPassword1.val().length >= "6") && (signUpPassword2.val().length > "0")) {
         $(".field__error--second").css("display", "block");
     } else {
         $(".field__error--second").css("display", "none");
@@ -37,28 +37,33 @@ function userLogin() {
         .then((userCredential) => {
         // Signed in
         var user = userCredential.user;
-        window.history.go(-1);
-        // ...
+        location.href = "index.html";
     })
         .catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
         $(".form__error").css("display", "block");
-  });
+    });
 }
 
 // Function for user to create a new account
 function userRegister() {
-    if (signUpPassword1.val().length > "6") {
-        console.log(signUpPassword1.val().length);
-    }
+    firebase.auth().createUserWithEmailAndPassword(signUpEmail.val(), signUpPassword2.val())
+        .then((userCredential) => {
+        // Signed in 
+        var user = userCredential.user;
+        location.href = "index.html";
+    })
+        .catch((error) => {
+        var errorCode = error.code;
+        var errorMessage = error.message;
+    });
 }
 
 // Function for user to logout
 function userLogout() {
     firebase.auth().signOut().then(() => {
         // Sign-out successful.
-        console.log("successful");
     }).catch((error) => {
         // An error happened.
     });
@@ -81,7 +86,7 @@ signInEmail.add(signInPassword).add(signUpEmail).add(signUpPassword1).add(signUp
     formCheck(this);
 }); 
 
-signUpPassword1.on("blur", function() {
+signUpPassword1.add(signInPassword).on("blur", function() {
     lengthCheck(this);
 });
 
@@ -101,4 +106,8 @@ $("#up__submit").click(function(e) {
 
 $("#out").on("click", function(e){
     userLogout();
+});
+
+$("#page-back").click(function() {
+    location.href = "index.html";
 });
