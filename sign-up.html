@@ -30,22 +30,22 @@
                             <h2>Sign Up</h2>
                         </div>
 
-                        <form class="field form__fields">
+                        <form autocomplete="off" class="field form__fields">
                             <div class="field__input" style="margin-bottom: 10px;">
-                                <input type="text" name="email" class="field__input--email" id="up__email">
+                                <input type="email" autocomplete="off" name="email" class="field__input--email" id="up__email" value="">
                                 <label class="field__label">Email</label>
                             </div>
 
                             <div class="field__input" style="margin-bottom: 10px;">
-                                <input type="password" name="password" class="field__input--password" id="up__password--1">
+                                <input type="password" name="password" class="field__input--password" id="up__password--1" value="">
                                 <label class="field__label">Password</label>
-                                <span class="field__error--first">At least 6 characters is required</span>
+                                <span class="field__error--first">Password must be at least 6 characters long</span>
                             </div>
 
                             <div class="field__input">
-                                <input type="password" name="password" class="field__input--password" id="up__password--2">
+                                <input type="password" name="password" class="field__input--password" id="up__password--2" value="">
                                 <label class="field__label">Confirm Password</label>
-                                <span class="field__error--second">Make sure your password match</span>
+                                <span class="field__error--second">Make sure both password matches</span>
                             </div>
 
                             <div class="submission field__submit">

@@ -36,13 +36,14 @@
 
                         <form autocomplete="off" class="field form__fields">
                             <div class="field__input" style="margin-bottom: 10px;">
-                                <input type="text" autocomplete="off" name="email" class="field__input--email" id="in__email" value="">
+                                <input type="email" autocomplete="off" name="email" class="field__input--email" id="in__email" value="">
                                 <label class="field__label">Email</label>
                             </div>
 
                             <div class="field__input">
                                 <input type="password" name="password" class="field__input--password" id="in__password" value="">
                                 <label class="field__label">Password</label>
+                                <span class="field__error--first">Password must be at least 6 characters long</span>
                             </div>
 
                             <div class="submission field__submit">
