@@ -225,6 +225,7 @@ h2.heading-title {
 
 .blue {
     background-color: #0084F5;
+    color: #fff;
 }
 
 .dark {
@@ -252,7 +253,19 @@ h2.heading-title {
 
 
 
-/***** For Sign In/Sign Up page *****/
+/***** For quiz page *****/
+.quiz-button {
+    min-height: 120px;
+    min-width: 120px;
+    border: none;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+
+
+/***** For Sign In/Sign Up form *****/
 .form {
     display: flex;
     flex-direction: column;
@@ -283,6 +296,7 @@ h2.heading-title {
     position: absolute;
     top: 28px;
     left: 30px;
+    cursor: pointer;
 }
 
 .form__title h2 {
