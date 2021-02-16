@@ -36,7 +36,17 @@
                     </div>
                 </div>  
             </nav>
-            <div style="margin-top: 100px">
+            <div style="position: relative; margin-top: 100px; min-height: calc(100vh - 100px);">
+                <div class="auth auth--blur" id="auth-modal-state">
+                    <div class="auth__modal">
+                        <div class="auth__modal__content">
+                            <span>
+                                Please Sign In to continue
+                            </span>
+                            <a class="btn btn-outline-success" id="in" href="sign-in.html">SIGN IN</a>
+                        </div>
+                    </div>
+                </div>
                 <header class="page-title blue">
                     <div class="container">
                         <h2>
@@ -49,7 +59,7 @@
                     </div>
                 </header>
 
-                <section class="section-quiz light">
+                <section class="section-quiz light" id="selection">
                     <div class="section-wrapper container">
                         <div class="row row-cols-2 text-center" style="margin-bottom: 40px">
                             <div class="col">
@@ -71,8 +81,16 @@
                     </div>
                 </section>
 
-                <section class="section-quiz light" id="questionnaire">
+                <section class="section-quiz light" id="questionnaire" style="display: none;">
                     <div class="section-wrapper container">
+                        <div class="form__back" id="quiz-back">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20.958" height="18.241" viewBox="0 0 20.958 18.241">
+                                <g id="Group_13" data-name="Group 13" transform="translate(1.5 2.12)">
+                                    <path id="Path_12" data-name="Path 12" d="M490.136,190.689l-6.6,7.041,6.6,6.959" transform="translate(-483.518 -190.689)" fill="none" stroke="#0084f5" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                                    <path id="Path_13" data-name="Path 13" d="M482.518,197.739h17.958" transform="translate(-482.518 -190.689)" fill="none" stroke="#0084f5" stroke-linecap="round" stroke-width="3"/>
+                                </g>
+                              </svg>                              
+                        </div>
                         <div id="quiz"></div>
                         <button id="submit">Get Results</button>
                         <div id="results"></div>
@@ -110,6 +128,6 @@
             firebase.analytics();
         </script>
         <script src="verification.js"></script>
-        <script src="test.js"></script>
+        <script src="quiz.js"></script>
     </body>
 </html>

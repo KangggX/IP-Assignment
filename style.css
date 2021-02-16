@@ -300,14 +300,14 @@ h2.heading-title {
     margin-left: 10px;
     font-size: 14px;
     z-index: 2;
-    transition: all .3s ease-out;
+    transition: all .2s ease-out;
 }
 
 .option__mask {
     position: absolute;
     background-color: #0084F5;
     width: 0%;
-    height: 59px;
+    height: 60px;
     left: 54px;
     border-radius: 0 5px 5px 0;
     transition: all .3s ease-out;
@@ -323,6 +323,17 @@ h2.heading-title {
 
 .choice__answers input {
     display: none;
+}
+
+.auth--blur {
+    display: none;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
 }
 
 
@@ -524,25 +535,25 @@ select#country-selection {
 
 /***** Media Queries *****/
 @media screen and (min-width: 768px) {
-    .section-1::before, .section-stats::before {
+    .section-1::before, .section-stats::before, .section-quiz::before {
         top: -54px;
-        border-top: 54px solid transparent;
-        border-left: 54px solid transparent;
-        border-bottom: 54px solid #FFF8F3;
-        border-right: 54px solid #FFF8F3;
+        border-top: 27px solid transparent;
+        border-left: 27px solid transparent;
+        border-bottom: 27px solid #FFF8F3;
+        border-right: 27px solid #FFF8F3;
     }
 
     .section-2::before {
         top: -54px;
-        border-top: 54px solid #FFF8F3;
-        border-left: 54px solid #FFF8F3;
-        border-bottom: 54px solid transparent;
-        border-right: 54px solid transparent;
+        border-top: 27px solid #FFF8F3;
+        border-left: 27px solid #FFF8F3;
+        border-bottom: 27px solid transparent;
+        border-right: 27px solid transparent;
     }
 
     .section-stats::before {
-        border-bottom: 54px solid #001F39;
-        border-right: 54px solid #001F39;
+        border-bottom: 27px solid #001F39;
+        border-right: 27px solid #001F39;
     }
 }
 

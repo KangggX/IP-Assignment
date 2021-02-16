@@ -121,6 +121,16 @@ const quiz4 = [
 	}
 ];
 
+// Check if user is signed in or not
+firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      $("#auth-modal-state").hide();
+    } else {
+      // No user is signed in.
+      $("#auth-modal-state").css("display", "flex");
+    }
+});
+
 var quizContainer = $("#quiz");
 var resultsContainer = $("#results");
 var submitButton = $("#submit");
@@ -153,7 +163,11 @@ function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
                 `
 		    );
 	    };
-	    quizContainer.html(output.join(''));
+	    quizContainer.html(
+			`
+			
+			${output.join('')}`
+		);
 	};
 
 	function showResults(questions, resultsContainer){
@@ -183,6 +197,9 @@ function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
 }
 
 $("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", function() {
+	$("#selection").delay(100).hide(0);
+	$("#questionnaire").delay(100).show(0);
+
     if (this.id == "quiz1") {
         generateQuiz(quiz1, quizContainer, resultsContainer, submitButton);
     } else {
@@ -196,4 +213,10 @@ $("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", funct
             }
         }
     }
+});
+
+$("#quiz-back").on("click", function() {
+	$("#selection").delay(100).show(0);
+	$("#questionnaire").delay(100).hide(0);
+	console.log("hi");
 });
