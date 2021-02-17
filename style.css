@@ -331,7 +331,7 @@ h2.heading-title {
     display: none;
 }
 
-.auth--blur, .completed--blur {
+.auth--blur, .submitted--blur, .completed--blur {
     display: none;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.5);
@@ -342,24 +342,31 @@ h2.heading-title {
     z-index: 999;
 }
 
-.auth__modal, .completed__modal {
+.auth__modal, .submitted__modal, .completed__modal {
+    text-align: center;
     color: #000;
     background-color: #fff;
     max-width: 80%;
-    padding: 40px 60px;
+    padding: 20px 30px 60px;
+    position: relative;
 }
 
-.auth__modal__content, .completed__modal__content {
+.auth__modal__content, .submitted__modal__content, .completed__modal__content {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.modal__title, .completed__title {
+.modal__title {
     font-size: 24px;
     font-weight: 500;
-    margin-bottom: 15px;
-    text-align: center;
+}
+
+.modal__close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    cursor: pointer;
 }
 
 
