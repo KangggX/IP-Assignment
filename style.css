@@ -55,13 +55,18 @@ body {
     bottom: -26px;
 }
 
-.navbar-collapse .btn {
+.navbar-collapse .btn, .auth__modal__content .btn {
     background-color: #0084F5;
     border: none;
     color: #fff;
     font-weight: 600;
     padding: 10px 36px;
     margin: 0 32px;
+}
+
+.navbar-collapse .btn-outline-success:active:focus:hover {
+    box-shadow: none;
+    filter: brightness(0.8);
 }
 
 .navbar-toggler {
@@ -202,6 +207,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     padding: 12px 55px;
+    text-decoration: none;
 }
 
 h2.heading-title {
@@ -325,7 +331,7 @@ h2.heading-title {
     display: none;
 }
 
-.auth--blur {
+.auth--blur, .completed--blur {
     display: none;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.5);
@@ -334,6 +340,26 @@ h2.heading-title {
     align-items: center;
     justify-content: center;
     z-index: 999;
+}
+
+.auth__modal, .completed__modal {
+    color: #000;
+    background-color: #fff;
+    max-width: 80%;
+    padding: 40px 60px;
+}
+
+.auth__modal__content, .completed__modal__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal__title, .completed__title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 
