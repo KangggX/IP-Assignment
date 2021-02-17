@@ -26,7 +26,7 @@
                             <a class="nav-link me-4" href="index.html">HOME</a>
                             <a class="nav-link me-4" href="statistics.html">COVID-19 STATISTICS</a>
                             <a class="nav-link active me-4">THE QUIZ</a>
-                            <a class="nav-link me-4" href="quiz.html">POINTS STORE</a>
+                            <a class="nav-link me-4" href="store.html">POINTS STORE</a>
                         </div>
                         <form class="form-inline">
                             <a class="btn btn-outline-success" id="in" href="sign-in.html">SIGN IN</a>
@@ -40,10 +40,20 @@
                 <div class="auth auth--blur" id="auth-modal-state">
                     <div class="auth__modal">
                         <div class="auth__modal__content">
-                            <span>
+                            <span class="modal__title">
                                 Please Sign In to continue
                             </span>
                             <a class="btn btn-outline-success" id="in" href="sign-in.html">SIGN IN</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="completed completed--blur" id="completed-modal-state">
+                    <div class="completed__modal">
+                        <div class="completed__modal__content">
+                            <span class="modal__title">
+                                You have already completed this quiz
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -92,8 +102,7 @@
                               </svg>                              
                         </div>
                         <div id="quiz"></div>
-                        <button id="submit">Get Results</button>
-                        <div id="results"></div>
+                        <button id="submit">Submit</button>
                     </div>
                 </section>
             </div>
