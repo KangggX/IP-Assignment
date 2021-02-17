@@ -42,6 +42,7 @@ function userLogin() {
         .catch((error) => {
         var errorCode = error.code;
         var errorMessage = error.message;
+        console.log(errorCode);
         $(".form__error").css("display", "block");
     });
 }
@@ -88,12 +89,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 
         // Creating user database
         db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
-            if (doc.exists) { // If user data exists
+            if (doc.exists) { // If user data exists, do nothing
                 console.log("User data successfully obtained");
             } else {    // If user data doesn't exist, create a new data
                 console.log("Creating new user data");
                 db.collection("users").doc(`${localStorage["user-id"]}`).set({
-                    points: 0,
+                    globalPoints: 0,
+                    localPoints: 0,
                     qComplete1: false,
                     qComplete2: false,
                     qComplete3: false,
