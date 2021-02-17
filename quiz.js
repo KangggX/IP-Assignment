@@ -211,6 +211,8 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 			console.log("failure");
 
 		} else {
+			quizSubmissionSuccess()
+			$("#qn-correct").add("#modal__score").html(generatePoints(questions));
 			$("#selection").delay(100).show(0);
 			$("#questionnaire").delay(100).hide(0);
 
@@ -249,8 +251,35 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
     });
 }
 
+function quizSubmissionSuccess() {
+	$("#submitted-modal-state").css("display", "flex").hide().fadeIn(200);
+	$("#submitted-modal-state .modal__lottie").html(`
+		<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_jNEOSb.json" background="transparent" speed="2" style="width: 150px; height: 150px;" autoplay></lottie-player>
+		Quiz Submitted
+	`);
+
+	$(".modal__close").on("click", function() {
+		$("#submitted-modal-state").fadeOut(200);
+	});
+
+	$(window).on("click", function(e) {
+		if (e.target.id == "submitted-modal-state") {
+			$("#submitted-modal-state").fadeOut(200);
+		};
+	});
+}
+
 function quizCompleted() {
 	$("#completed-modal-state").css("display", "flex").hide().fadeIn(200);
+	$("#completed-modal-state .modal__lottie").html(`
+		<lottie-player src="https://assets5.lottiefiles.com/packages/lf20_j3UXNf.json" background="transparent" speed="2" style="width: 150px; height: 150px;" autoplay></lottie-player>
+		Access Denied
+	`);
+
+	$(".modal__close").on("click", function() {
+		$("#completed-modal-state").fadeOut(200);
+	});
+
 	$(window).on("click", function(e) {
 		if (e.target.id == "completed-modal-state") {
 			$("#completed-modal-state").fadeOut(200);
@@ -276,8 +305,8 @@ $("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", funct
         if (this.id == "quiz2") {
             db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
 				if (doc.data().qComplete2 === false) {
-					$("#selection").delay(100).hide(0);
-					$("#questionnaire").delay(100).show(0);
+					$("#selection").delay(20).hide(0);
+					$("#questionnaire").delay(20).show(0);
 					generateQuiz(quiz2, quizContent, "quiz-2", submitButton);
 				} else {
 					quizCompleted();
@@ -287,8 +316,8 @@ $("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", funct
             if (this.id == "quiz3") {
                 db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
 					if (doc.data().qComplete3 === false) {
-						$("#selection").delay(100).hide(0);
-						$("#questionnaire").delay(100).show(0);
+						$("#selection").delay(20).hide(0);
+						$("#questionnaire").delay(20).show(0);
 						generateQuiz(quiz3, quizContent, "quiz-3", submitButton);
 					} else {
 						quizCompleted();
@@ -298,8 +327,8 @@ $("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", funct
 				
                 db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
 					if (doc.data().qComplete4 === false) {
-						$("#selection").delay(100).hide(0);
-						$("#questionnaire").delay(100).show(0);
+						$("#selection").delay(20).hide(0);
+						$("#questionnaire").delay(20).show(0);
 						generateQuiz(quiz4, quizContent, "quiz-4", submitButton);
 					} else {
 						quizCompleted();
@@ -311,6 +340,6 @@ $("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", funct
 });
 
 $("#quiz-back").on("click", function() {
-	$("#selection").delay(100).show(0);
-	$("#questionnaire").delay(100).hide(0);
+	$("#selection").delay(20).show(0);
+	$("#questionnaire").delay(20).hide(0);
 });
