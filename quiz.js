@@ -1,3 +1,4 @@
+// Quiz 1 questions and answers
 const quiz1 = [
 	{
 		question: "How does COVID-19 spread among us?",
@@ -29,6 +30,7 @@ const quiz1 = [
 	}
 ];
 
+// Quiz 2 questions and answers
 const quiz2 = [
 	{
 		question: "Are people with HIV at a higher risk of contracting COVID-19?",
@@ -58,6 +60,7 @@ const quiz2 = [
 	}
 ];
 
+// Quiz 3 questions and answers
 const quiz3 = [
 	{
 		question: "Can washing your hands protect you from contracting COVID-19?",
@@ -89,6 +92,7 @@ const quiz3 = [
 	}
 ];
 
+// Quiz 4 questions and answers
 const quiz4 = [
 	{
 		question: "What kind of face mask do I need to wear?",
@@ -133,6 +137,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 var quizContent = $("#quiz");
 var submitButton = $("#submit");
+var currentQuiz;
 function generateQuiz(questions, quizContent, quizID, submitButton) {
     renderQuestions(questions, quizContent);
     
@@ -164,6 +169,7 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 		    );
 	    };
 	    quizContent.html(output.join('')).attr("id", `quiz ${quizID}`);
+		currentQuiz = quizID;
 	};
 
 	function generatePoints(questions) {
@@ -199,9 +205,7 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 		return emptyQuestions
 	}
 
-    submitButton.on("click", async function(e) {
-		await emptyQuestionsCheck();
-
+    submitButton.on("click", function(e) {
 		if (emptyQuestionsCheck() >= 1) {
 			e.preventDefault();
 			console.log("failure");
@@ -209,27 +213,98 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 		} else {
 			$("#selection").delay(100).show(0);
 			$("#questionnaire").delay(100).hide(0);
-			db.collection("users").doc(`${localStorage["user-id"]}`).update({
-				points: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`)
-			});
+
+			if (currentQuiz == "quiz-1") {
+				db.collection("users").doc(`${localStorage["user-id"]}`).update({
+					globalPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+					localPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+					qComplete1: true
+				});
+			} else {
+				if (currentQuiz == "quiz-2") {
+					db.collection("users").doc(`${localStorage["user-id"]}`).update({
+						globalPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+						localPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+						qComplete2: true
+					});
+				} else {
+					if (currentQuiz == "quiz-3") {
+						db.collection("users").doc(`${localStorage["user-id"]}`).update({
+							globalPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+							localPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+							qComplete3: true
+						});
+					} else {
+						if (currentQuiz == "quiz-4") {
+							db.collection("users").doc(`${localStorage["user-id"]}`).update({
+								globalPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+								localPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+								qComplete4: true
+							});
+						}
+					}
+				}
+			}
 		};
     });
 }
 
-$("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", function() {
-	$("#selection").delay(100).hide(0);
-	$("#questionnaire").delay(100).show(0);
+function quizCompleted() {
+	$("#completed-modal-state").css("display", "flex").hide().fadeIn(200);
+	$(window).on("click", function(e) {
+		if (e.target.id == "completed-modal-state") {
+			$("#completed-modal-state").fadeOut(200);
+		}
+	});
+}
 
+$("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", function() {
+	
+	// This entire if else statement is to check whether or not users have completed the specified quiz. If they have completed the quiz, they won't be able to access it
     if (this.id == "quiz1") {
-        generateQuiz(quiz1, quizContent, "quiz-1", submitButton);
+		db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
+			if (doc.data().qComplete1 === false) {
+				$("#selection").delay(20).hide(0);
+				$("#questionnaire").delay(20).show(0);
+				generateQuiz(quiz1, quizContent, "quiz-1", submitButton);
+			} else {
+				quizCompleted();
+			}
+		});
+        
     } else {
         if (this.id == "quiz2") {
-            generateQuiz(quiz2, quizContent, "quiz-2", submitButton);
+            db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
+				if (doc.data().qComplete2 === false) {
+					$("#selection").delay(100).hide(0);
+					$("#questionnaire").delay(100).show(0);
+					generateQuiz(quiz2, quizContent, "quiz-2", submitButton);
+				} else {
+					quizCompleted();
+				}
+			});
         } else {
             if (this.id == "quiz3") {
-                generateQuiz(quiz3, quizContent, "quiz-3", submitButton);
+                db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
+					if (doc.data().qComplete3 === false) {
+						$("#selection").delay(100).hide(0);
+						$("#questionnaire").delay(100).show(0);
+						generateQuiz(quiz3, quizContent, "quiz-3", submitButton);
+					} else {
+						quizCompleted();
+					}
+				});
             } else {
-                generateQuiz(quiz4, quizContent, "quiz-4", submitButton);
+				
+                db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
+					if (doc.data().qComplete4 === false) {
+						$("#selection").delay(100).hide(0);
+						$("#questionnaire").delay(100).show(0);
+						generateQuiz(quiz4, quizContent, "quiz-4", submitButton);
+					} else {
+						quizCompleted();
+					}
+				});
             }
         }
     }
