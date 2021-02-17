@@ -72,9 +72,37 @@ function userLogout() {
 // Check if user is signed in or not
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-      // User is signed in.
-      $("#in").css("display", "none");
-      $("#out").css("display", "initial");
+        // User is signed in.
+        $("#in").css("display", "none");
+        $("#out").css("display", "initial");
+
+        // Getting user profile
+        var user = firebase.auth().currentUser;
+        var email, uid;
+        if (user != null) {
+            email = user.email;
+            uid = user.uid;
+            localStorage.setItem("email", email);
+            localStorage.setItem("user-id", uid);
+        };
+
+        // Creating user database
+        db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
+            if (doc.exists) { // If user data exists
+                console.log("User data successfully obtained");
+            } else {    // If user data doesn't exist, create a new data
+                console.log("Creating new user data");
+                db.collection("users").doc(`${localStorage["user-id"]}`).set({
+                    points: 0,
+                    qComplete1: false,
+                    qComplete2: false,
+                    qComplete3: false,
+                    qComplete4: false,
+                    userID: `${localStorage["user-id"]}`
+                });
+            };
+        });
+
     } else {
       // No user is signed in.
       $("#in").css("display", "inline-block");

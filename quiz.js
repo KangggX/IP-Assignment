@@ -131,22 +131,22 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
-var quizContainer = $("#quiz");
-var resultsContainer = $("#results");
+var quizContent = $("#quiz");
 var submitButton = $("#submit");
-function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
-    renderQuestions(questions, quizContainer);
+function generateQuiz(questions, quizContent, quizID, submitButton) {
+    renderQuestions(questions, quizContent);
     
-	function renderQuestions(questions, quizContainer){
-	    var output = [];
-	    var answers;
+	function renderQuestions(questions, quizContent) {
+	    let output = [];
+	    let answers;
 
 	    for (var i = 0; i < questions.length; i++) {
 		    answers = [];
 
 		    for (letter in questions[i].answers) {
 		    	answers.push(
-                    `<label class="option choice__option"><input type="radio" name="question${i}" value="${letter}">
+                    `<label class="option choice__option">
+					<input type="radio" name="question${i}" value="${letter}">
                         <div class="option__letter">${letter}</div>
                         <div class="option__desc">${questions[i].answers[letter]}</div>
                         <div class="option__mask"></div>
@@ -163,36 +163,56 @@ function generateQuiz(questions, quizContainer, resultsContainer, submitButton){
                 `
 		    );
 	    };
-	    quizContainer.html(
-			`
-			
-			${output.join('')}`
-		);
+	    quizContent.html(output.join('')).attr("id", `quiz ${quizID}`);
 	};
 
-	function showResults(questions, resultsContainer){
-	    var answerContainers = $(".choice .choice__answers");
-	
-	    var userAnswer = "";
-	    var numCorrect = 0;
+	function generatePoints(questions) {
+	    let userAnswer;
+	    let pointsEarned = 0;
 	
 	    for (var i = 0; i < questions.length; i++) {
-
-		    userAnswer = (answerContainers[i].querySelector(`input[name=question${i}]:checked`) || {}).value;
+			userAnswer = ($(`.choice .choice__answers input[name=question${i}]:checked`) || {}).val();
 		
 		    if (userAnswer === questions[i].correctAnswer) {
-			    numCorrect++;
+			    pointsEarned++;
                 console.log("hi1");
 		    } else {
 			    console.log("hi2");
 		    };
 	    };
+		console.log(pointsEarned);
     
-    resultsContainer.html(`${numCorrect} out of ${questions.length}`);
+    	return pointsEarned;
 	};
 
-    submitButton.on("click", function() {
-        showResults(questions, resultsContainer);
+	function emptyQuestionsCheck() {
+		let userAnswer;
+		let emptyQuestions = 0;
+
+		for (var i = 0; i < questions.length; i++) {
+			userAnswer = ($(`.choice .choice__answers input[name=question${i}]:checked`) || {}).val();
+			if (userAnswer == undefined) {
+				emptyQuestions++;
+			};
+		};
+		
+		return emptyQuestions
+	}
+
+    submitButton.on("click", async function(e) {
+		await emptyQuestionsCheck();
+
+		if (emptyQuestionsCheck() >= 1) {
+			e.preventDefault();
+			console.log("failure");
+
+		} else {
+			$("#selection").delay(100).show(0);
+			$("#questionnaire").delay(100).hide(0);
+			db.collection("users").doc(`${localStorage["user-id"]}`).update({
+				points: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`)
+			});
+		};
     });
 }
 
@@ -201,15 +221,15 @@ $("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", funct
 	$("#questionnaire").delay(100).show(0);
 
     if (this.id == "quiz1") {
-        generateQuiz(quiz1, quizContainer, resultsContainer, submitButton);
+        generateQuiz(quiz1, quizContent, "quiz-1", submitButton);
     } else {
         if (this.id == "quiz2") {
-            generateQuiz(quiz2, quizContainer, resultsContainer, submitButton);
+            generateQuiz(quiz2, quizContent, "quiz-2", submitButton);
         } else {
             if (this.id == "quiz3") {
-                generateQuiz(quiz3, quizContainer, resultsContainer, submitButton);
+                generateQuiz(quiz3, quizContent, "quiz-3", submitButton);
             } else {
-                generateQuiz(quiz4, quizContainer, resultsContainer, submitButton);
+                generateQuiz(quiz4, quizContent, "quiz-4", submitButton);
             }
         }
     }
@@ -218,5 +238,4 @@ $("#quiz1").add($("#quiz2")).add($("#quiz3")).add($("#quiz4")).on("click", funct
 $("#quiz-back").on("click", function() {
 	$("#selection").delay(100).show(0);
 	$("#questionnaire").delay(100).hide(0);
-	console.log("hi");
 });
