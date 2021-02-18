@@ -210,6 +210,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     padding: 12px 55px;
+    text-align: center;
     text-decoration: none;
 }
 
@@ -230,6 +231,11 @@ h2.heading-title {
 
 .light {
     color: #001F39;
+}
+
+.dark-blue {
+    background-color: #001F39;
+    color: #fff;
 }
 
 .blue {
@@ -387,6 +393,13 @@ h2.heading-title {
 /***** For leaderboard page *****/
 .leaderboard {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.leaderboard-center {
+    align-items: center;
 }
 
 .leaderboard::before, .leaderboard::after {
