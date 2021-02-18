@@ -1,6 +1,7 @@
 var signInEmail = $("#in__email");
 var signInPassword = $("#in__password");
 var signUpEmail = $("#up__email");
+var signUpName = $("#up__username");
 var signUpPassword1 = $("#up__password--1");
 var signUpPassword2 = $("#up__password--2");
 
@@ -48,11 +49,16 @@ function userLogin() {
 }
 
 // Function for user to create a new account
-function userRegister() {
+function userRegister(username) {
     firebase.auth().createUserWithEmailAndPassword(signUpEmail.val(), signUpPassword2.val())
         .then((userCredential) => {
         // Signed in 
         var user = userCredential.user;
+        console.log(user);
+        console.log(username);
+        user.updateProfile({
+            displayName: `${username}`
+        });
         location.href = "index.html";
     })
         .catch((error) => {
@@ -79,11 +85,13 @@ firebase.auth().onAuthStateChanged(function(user) {
 
         // Getting user profile
         var user = firebase.auth().currentUser;
-        var email, uid;
+        var email, name, uid;
         if (user != null) {
             email = user.email;
+            name = user.displayName;
             uid = user.uid;
             localStorage.setItem("email", email);
+            localStorage.setItem("username", name);
             localStorage.setItem("user-id", uid);
         };
 
@@ -100,6 +108,7 @@ firebase.auth().onAuthStateChanged(function(user) {
                     qComplete2: false,
                     qComplete3: false,
                     qComplete4: false,
+                    name: `${localStorage["username"]}`,
                     userID: `${localStorage["user-id"]}`
                 });
             };
@@ -112,7 +121,7 @@ firebase.auth().onAuthStateChanged(function(user) {
     }
 });
 
-signInEmail.add(signInPassword).add(signUpEmail).add(signUpPassword1).add(signUpPassword2).on("blur", function() {
+signInEmail.add(signInPassword).add(signUpEmail).add(signUpName).add(signUpPassword1).add(signUpPassword2).on("blur", function() {
     formCheck(this);
 }); 
 
@@ -131,7 +140,7 @@ $("#in__submit").click(function(e) {
 
 $("#up__submit").click(function(e) {
     e.preventDefault();
-    userRegister();
+    userRegister(signUpName.val());
 })
 
 $("#out").on("click", function(e){
