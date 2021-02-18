@@ -145,7 +145,7 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 	    let output = [];
 	    let answers;
 
-	    for (var i = 0; i < questions.length; i++) {
+	    for (let i = 0; i < questions.length; i++) {
 		    answers = [];
 
 		    for (letter in questions[i].answers) {
@@ -176,7 +176,7 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 	    let userAnswer;
 	    let pointsEarned = 0;
 	
-	    for (var i = 0; i < questions.length; i++) {
+	    for (let i = 0; i < questions.length; i++) {
 			userAnswer = ($(`.choice .choice__answers input[name=question${i}]:checked`) || {}).val();
 		
 		    if (userAnswer === questions[i].correctAnswer) {
@@ -195,7 +195,7 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 		let userAnswer;
 		let emptyQuestions = 0;
 
-		for (var i = 0; i < questions.length; i++) {
+		for (let i = 0; i < questions.length; i++) {
 			userAnswer = ($(`.choice .choice__answers input[name=question${i}]:checked`) || {}).val();
 			if (userAnswer == undefined) {
 				emptyQuestions++;

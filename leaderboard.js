@@ -76,5 +76,5 @@ async function generateList() {
             </li>
             ${output.join('')}
         </ul>
-    `);
+    `).removeClass("leaderboard-center");
 }
