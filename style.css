@@ -4,7 +4,7 @@ body {
     overflow-x: hidden;
     color: #fff;
     background-color: #FFF8F3;
-    font-family: poppins, sans-serif;
+    font-family: "poppins", sans-serif;
 }
 
 *, *:before, *:after {
@@ -28,7 +28,7 @@ body {
 
 .navbar-brand {
     margin: 0 48px 0 36px;
-    font-family: acumin-pro, sans-serif;
+    font-family: "acumin-pro", sans-serif;
     font-size: 24px !important;
 }
 
@@ -38,6 +38,7 @@ body {
 
 .navbar-nav .nav-link {
     position: relative;
+    text-align: center;
     font-size: 16px;
     padding: 12px 0;
     padding-left: 32px;
@@ -162,6 +163,8 @@ body {
 
 
 
+
+
 /***** For home page *****/
 .main-bg {
     position: relative;
@@ -188,7 +191,7 @@ body {
 }
 
 .icon {
-    font-family: acumin-pro, sans-serif;
+    font-family: "acumin-pro", sans-serif;
     font-size: 48px;
     font-weight: bold;
 }
@@ -211,9 +214,9 @@ body {
 }
 
 h2.heading-title {
-    font-family: acumin-pro, sans-serif;
+    font-family: "acumin-pro", sans-serif;
     font-weight: 800;
-    font-size: 42px;
+    font-size: 38px;
 }
 
 .section__body {
@@ -248,12 +251,17 @@ h2.heading-title {
 /***** For statistics page *****/
 .page-title {
     padding: 60px 50px 0 30px;
+    overflow-wrap: break-word;
 }
 
 .page-title h2 {
-    font-family: acumin-pro, sans-serif;
+    font-family: "acumin-pro", sans-serif;
     font-size: 42px;
     font-weight: 900;
+}
+
+.page-title .container {
+    padding: 0;
 }
 
 
@@ -351,6 +359,10 @@ h2.heading-title {
     position: relative;
 }
 
+.auth__modal {
+    padding: 30px 60px;
+}
+
 .auth__modal__content, .submitted__modal__content, .completed__modal__content {
     display: flex;
     flex-direction: column;
@@ -367,6 +379,86 @@ h2.heading-title {
     top: 20px;
     right: 25px;
     cursor: pointer;
+}
+
+
+
+
+/***** For leaderboard page *****/
+.leaderboard {
+    position: relative;
+}
+
+.leaderboard::before, .leaderboard::after {
+    content: '';
+    display: block;
+    position: absolute;
+}
+
+.leaderboard::before {
+    top: 23px;
+    right: 0;
+    border-top: 2vw solid #FFF8F3;
+    border-left: 2vw solid transparent;
+    border-bottom: 2vw solid transparent;
+    border-right: 2vw solid #FFF8F3;
+}
+
+.leaderboard__list{
+    padding: 0;
+}
+
+.leaderboard__list li {
+    display: flex;
+}
+
+.leaderboard__list li:not(:first-child) {
+    height: 70px;
+    background-color: hsl(172deg 0% 91%);
+    border-bottom: 2px solid hsl(0deg 0% 84%);
+}
+
+.leaderboard__list--item {
+    display: flex;
+    align-items: center;
+}
+
+.leaderboard__list--item:not(:last-child) {
+    justify-content: center;
+}
+
+.leaderboard--ranking {
+    font-family: "acumin-pro", sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.leaderboard--ranking, .leaderboard__title--ranking {
+    width: 20%;
+    max-width: 90px;
+}
+
+.leaderboard--points, .leaderboard__title--points {
+    width: 23%;
+    max-width: 60px;
+}
+
+.leaderboard--user, .leaderboard__title--user {
+    width: 62%;
+    padding-left: 25px;
+}
+
+.leaderboard--user {
+    font-weight: 500;
+}
+
+.leaderboard--points {
+    background-color: hsl(172deg 0% 87%);
+    font-size: 14px;
+}
+
+.leaderboard__title--ranking, .leaderboard__title--points, .leaderboard__title--user {
+    font-size: 12px;
 }
 
 
@@ -459,7 +551,7 @@ h2.heading-title {
     transition: 0.15s all ease-in-out;
 }
 
-.field__input--email:focus + .field__label, .field__input--password:focus + .field__label, .field__input--non-empty + .field__label {
+.field__input--email:focus + .field__label, .field__input--password:focus + .field__label, .field__input--username:focus + .field__label, .field__input--non-empty + .field__label {
     opacity: 0;
 }
 
@@ -588,10 +680,18 @@ select#country-selection {
         border-bottom: 27px solid #001F39;
         border-right: 27px solid #001F39;
     }
+
+    .leaderboard::before {
+        border-top: 12px solid #FFF8F3;
+        border-left: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-right: 12px solid #FFF8F3;
+    }
 }
 
 @media screen and (max-width: 990px) {
     .navbar-nav .nav-link {
+        text-align: left;
         font-size: 18px;
     }
 
