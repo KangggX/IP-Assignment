@@ -24,7 +24,14 @@ async function getUser() {
         for (let i = 0; i < points.length; i++) {
             db.collection("users").where("globalPoints", "==", points[i]).get().then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    allUser.push(doc.data().name);
+
+                    // Prevents leaderboard from showing "null" bug
+                    if (allUser.includes(`${doc.data().name}`) === true) {
+                        return true;
+                    } else {
+                        allUser.push(doc.data().name);
+                    }
+                    
                 });
             });
         }
