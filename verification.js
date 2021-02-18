@@ -4,6 +4,13 @@ var signUpEmail = $("#up__email");
 var signUpName = $("#up__username");
 var signUpPassword1 = $("#up__password--1");
 var signUpPassword2 = $("#up__password--2");
+var usernameList = [];
+
+db.collection("users").get().then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+        usernameList.push(doc.data().name);
+    });
+});
 
 // If form input value is undefined, form label will still be visible
 function formCheck(e) {
@@ -36,35 +43,47 @@ function pwCheck() {
 function userLogin() {
     firebase.auth().signInWithEmailAndPassword(signInEmail.val(), signInPassword.val())
         .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        location.href = "index.html";
-    })
+            // Signed in
+            var user = userCredential.user;
+            location.href = "index.html";
+        })
         .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(errorCode);
-        $(".form__error").css("display", "block");
-    });
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            console.log(errorCode);
+            $(".form__error").css("display", "block");
+        });
 }
 
 // Function for user to create a new account
 function userRegister(username) {
-    firebase.auth().createUserWithEmailAndPassword(signUpEmail.val(), signUpPassword2.val())
+    let error = 0;
+    for (let i = 0; i < usernameList.length; i++) {
+        if (usernameList[i] == username) {
+            error++;
+            console.log("error name");
+        }
+    }
+
+    if (error == 0) {
+        firebase.auth().createUserWithEmailAndPassword(signUpEmail.val(), signUpPassword2.val())
         .then((userCredential) => {
-        // Signed in 
-        var user = userCredential.user;
-        console.log(user);
-        console.log(username);
-        user.updateProfile({
-            displayName: `${username}`
-        });
-        location.href = "index.html";
-    })
+            // Signed in 
+            var user = userCredential.user;
+
+            console.log(user);
+            console.log(username);
+            user.updateProfile({
+                displayName: `${username}`
+            });
+            location.href = "index.html";
+        })
         .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-    });
+            var errorCode = error.code;
+            var errorMessage = error.message;
+        });
+    }
+    
 }
 
 // Function for user to logout
@@ -77,7 +96,7 @@ function userLogout() {
 }
 
 // Check if user is signed in or not
-firebase.auth().onAuthStateChanged(function(user) {
+firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         // User is signed in.
         $("#in").css("display", "none");
@@ -115,38 +134,43 @@ firebase.auth().onAuthStateChanged(function(user) {
         });
 
     } else {
-      // No user is signed in.
-      $("#in").css("display", "inline-block");
-      $("#out").css("display", "none");
+        // No user is signed in.
+        $("#in").css("display", "inline-block");
+        $("#out").css("display", "none");
+
+        // Clear user local storage
+        localStorage.removeItem("user-id")
+        localStorage.removeItem("username");
+        localStorage.removeItem("email");
     }
 });
 
-signInEmail.add(signInPassword).add(signUpEmail).add(signUpName).add(signUpPassword1).add(signUpPassword2).on("blur", function() {
+signInEmail.add(signInPassword).add(signUpEmail).add(signUpName).add(signUpPassword1).add(signUpPassword2).on("blur", function () {
     formCheck(this);
-}); 
+});
 
-signUpPassword1.add(signInPassword).on("blur", function() {
+signUpPassword1.add(signInPassword).on("blur", function () {
     lengthCheck(this);
 });
 
-signUpPassword2.on("blur", function() {
+signUpPassword2.on("blur", function () {
     pwCheck();
 });
 
-$("#in__submit").click(function(e) {
+$("#in__submit").click(function (e) {
     e.preventDefault();
     userLogin();
 })
 
-$("#up__submit").click(function(e) {
+$("#up__submit").click(function (e) {
     e.preventDefault();
     userRegister(signUpName.val());
 })
 
-$("#out").on("click", function(e){
+$("#out").on("click", function (e) {
     userLogout();
 });
 
-$("#page-back").click(function() {
+$("#page-back").click(function () {
     location.href = "index.html";
 });
