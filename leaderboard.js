@@ -38,7 +38,7 @@ async function getUser() {
 
         setTimeout(() => {
             resolve(allUser);
-        }, 600);
+        }, 1000);
     });
 }
 
