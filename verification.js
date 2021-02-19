@@ -67,23 +67,24 @@ function userRegister(username) {
 
     if (error == 0) {
         firebase.auth().createUserWithEmailAndPassword(signUpEmail.val(), signUpPassword2.val())
-        .then((userCredential) => {
-            // Signed in 
-            var user = userCredential.user;
+            .then((userCredential) => {
+                // Signed in 
+                var user = userCredential.user;
+                user.updateProfile({
+                    displayName: `${username}`
+                });
+                console.log(user);
 
-            console.log(user);
-            console.log(username);
-            user.updateProfile({
-                displayName: `${username}`
+                setTimeout(() => {
+                    location.href = "index.html";
+                }, 1000); 
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
             });
-            location.href = "index.html";
-        })
-        .catch((error) => {
-            var errorCode = error.code;
-            var errorMessage = error.message;
-        });
     }
-    
+
 }
 
 // Function for user to logout
@@ -102,36 +103,41 @@ firebase.auth().onAuthStateChanged(function (user) {
         $("#in").css("display", "none");
         $("#out").css("display", "initial");
 
-        // Getting user profile
-        var user = firebase.auth().currentUser;
-        var email, name, uid;
-        if (user != null) {
-            email = user.email;
-            name = user.displayName;
-            uid = user.uid;
-            localStorage.setItem("email", email);
-            localStorage.setItem("username", name);
-            localStorage.setItem("user-id", uid);
-        };
-
-        // Creating user database
-        db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
-            if (doc.exists) { // If user data exists, do nothing
-                console.log("User data successfully obtained");
-            } else {    // If user data doesn't exist, create a new data
-                console.log("Creating new user data");
-                db.collection("users").doc(`${localStorage["user-id"]}`).set({
-                    globalPoints: 0,
-                    localPoints: 0,
-                    qComplete1: false,
-                    qComplete2: false,
-                    qComplete3: false,
-                    qComplete4: false,
-                    name: `${localStorage["username"]}`,
-                    userID: `${localStorage["user-id"]}`
-                });
+        setTimeout(() => {
+            // Getting user profile
+            var user = firebase.auth().currentUser;
+            var email, name, uid;
+            if (user != null) {
+                email = user.email;
+                name = user.displayName;
+                uid = user.uid;
+                localStorage.setItem("email", email);
+                localStorage.setItem("username", name);
+                localStorage.setItem("user-id", uid);
             };
-        });
+
+            // Creating user database
+            db.collection("users").doc(`${localStorage["user-id"]}`).get().then((doc) => {
+                if (doc.exists) { // If user data exists, do nothing
+                    console.log("User data successfully obtained");
+                } else {    // If user data doesn't exist, create a new data
+                    console.log("Creating new user data");
+                    db.collection("users").doc(`${localStorage["user-id"]}`).set({
+                        globalPoints: 0,
+                        localPoints: 0,
+                        qComplete1: false,
+                        qComplete2: false,
+                        qComplete3: false,
+                        qComplete4: false,
+                        name: `${localStorage["username"]}`,
+                        userID: `${localStorage["user-id"]}`
+                    });
+                };setTimeout(() => {
+                location.href = "index.html";
+            }, 1000); 
+            });
+        }, 1000);
+
 
     } else {
         // No user is signed in.
