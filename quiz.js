@@ -205,7 +205,7 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
     submitButton.on("click", function(e) {
 		if (emptyQuestionsCheck() >= 1) {
 			e.preventDefault();
-			console.log("failure");
+			alert("Please ensure that all questions are answered");
 
 		} else {
 			quizSubmissionSuccess()
