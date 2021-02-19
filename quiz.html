@@ -16,7 +16,7 @@
         <div>
             <nav class="navbar navbar-expand-lg navbar-dark fixed-top fs-5" style="background-color: #111111;">
                 <div class="container" style="margin: 0;">
-                    <a class="navbar-brand fw-bold" href="index.html">V-RUS</a>
+                    <a class="navbar-brand fw-bold" href="index.html" style="width: 240px; padding: 0;"><img src="img/branding-logo.png" style="width: 50%;"></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -104,36 +104,40 @@
                     <div class="section-wrapper container">
                         <div class="row row-cols-2 text-center" style="margin-bottom: 40px">
                             <div class="col">
-                                <button class="quiz-button blue" id="quiz1">#1</button>
+                                <button class="quiz-button blue" id="quiz1">Quiz 1</button>
                             </div>
                             <div class="col">
-                                <button class="quiz-button blue" id="quiz2">#2</button>
+                                <button class="quiz-button blue" id="quiz2">Quiz 2</button>
                             </div>
                         </div>
 
                         <div class="row row-cols-2 text-center">
                             <div class="col">
-                                <button class="quiz-button blue" id="quiz3">#3</button>
+                                <button class="quiz-button blue" id="quiz3">Quiz 3</button>
                             </div>
                             <div class="col">
-                                <button class="quiz-button blue" id="quiz4">#4</button>
+                                <button class="quiz-button blue" id="quiz4">Quiz 4</button>
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <section class="section-quiz light" id="questionnaire" style="display: none;">
-                    <div class="section-wrapper container">
-                        <div class="form__back" id="quiz-back">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20.958" height="18.241" viewBox="0 0 20.958 18.241">
-                                <g id="Group_13" data-name="Group 13" transform="translate(1.5 2.12)">
-                                    <path id="Path_12" data-name="Path 12" d="M490.136,190.689l-6.6,7.041,6.6,6.959" transform="translate(-483.518 -190.689)" fill="none" stroke="#0084f5" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
-                                    <path id="Path_13" data-name="Path 13" d="M482.518,197.739h17.958" transform="translate(-482.518 -190.689)" fill="none" stroke="#0084f5" stroke-linecap="round" stroke-width="3"/>
-                                </g>
-                              </svg>                              
+                    <div class="section-wrapper container" style="padding-top: 120px;">
+                        <div class="quiz quiz__content">
+                            <div class="form__back" id="quiz-back" style="color: #0084F5; font-weight: 600; top: 75px;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20.958" height="18.241" viewBox="0 0 20.958 18.241">
+                                    <g id="Group_13" data-name="Group 13" transform="translate(1.5 2.12)">
+                                        <path id="Path_12" data-name="Path 12" d="M490.136,190.689l-6.6,7.041,6.6,6.959" transform="translate(-483.518 -190.689)" fill="none" stroke="#0084f5" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+                                        <path id="Path_13" data-name="Path 13" d="M482.518,197.739h17.958" transform="translate(-482.518 -190.689)" fill="none" stroke="#0084f5" stroke-linecap="round" stroke-width="3"/>
+                                    </g>
+                                </svg>
+                                <span>BACK</span>                            
+                            </div>
+                            <div id="quiz"></div>
+                            <button class="blue" id="submit">Submit</button>
                         </div>
-                        <div id="quiz"></div>
-                        <button id="submit">Submit</button>
+                        
                     </div>
                 </section>
             </div>
