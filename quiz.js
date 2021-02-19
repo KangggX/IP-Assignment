@@ -137,7 +137,7 @@ firebase.auth().onAuthStateChanged(function(user) {
 
 var quizContent = $("#quiz");
 var submitButton = $("#submit");
-var currentQuiz;
+var currentQuiz = "";
 function generateQuiz(questions, quizContent, quizID, submitButton) {
     renderQuestions(questions, quizContent);
     
@@ -162,7 +162,7 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 		    output.push(
                 `
                 <div class="choice choice--wrapper">
-                    <div class="choice__question">${questions[i].question}</div>
+                    <div class="choice__question" style="font-weight: 500;">${questions[i].question}</div>
                     <div class="choice__answers">${answers.join('')}</div>
                 </div>
                 `
@@ -173,18 +173,15 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 	};
 
 	function generatePoints(questions) {
-	    let userAnswer;
+	    let userAnswer = "";
 	    let pointsEarned = 0;
-	
+		console.log(pointsEarned);
 	    for (let i = 0; i < questions.length; i++) {
 			userAnswer = ($(`.choice .choice__answers input[name=question${i}]:checked`) || {}).val();
 		
-		    if (userAnswer === questions[i].correctAnswer) {
+		    if (userAnswer == questions[i].correctAnswer) {
 			    pointsEarned++;
-                console.log("hi1");
-		    } else {
-			    console.log("hi2");
-		    };
+		    }
 	    };
 		console.log(pointsEarned);
     
@@ -218,29 +215,29 @@ function generateQuiz(questions, quizContent, quizID, submitButton) {
 
 			if (currentQuiz == "quiz-1") {
 				db.collection("users").doc(`${localStorage["user-id"]}`).update({
-					globalPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
-					localPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+					globalPoints: firebase.firestore.FieldValue.increment(generatePoints(questions)),
+					localPoints: firebase.firestore.FieldValue.increment(generatePoints(questions)),
 					qComplete1: true
 				});
 			} else {
 				if (currentQuiz == "quiz-2") {
 					db.collection("users").doc(`${localStorage["user-id"]}`).update({
-						globalPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
-						localPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+						globalPoints: firebase.firestore.FieldValue.increment(generatePoints(questions)),
+						localPoints: firebase.firestore.FieldValue.increment(generatePoints(questions)),
 						qComplete2: true
 					});
 				} else {
 					if (currentQuiz == "quiz-3") {
 						db.collection("users").doc(`${localStorage["user-id"]}`).update({
-							globalPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
-							localPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+							globalPoints: firebase.firestore.FieldValue.increment(generatePoints(questions)),
+							localPoints: firebase.firestore.FieldValue.increment(generatePoints(questions)),
 							qComplete3: true
 						});
 					} else {
 						if (currentQuiz == "quiz-4") {
 							db.collection("users").doc(`${localStorage["user-id"]}`).update({
-								globalPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
-								localPoints: firebase.firestore.FieldValue.increment(`${generatePoints(questions)}`),
+								globalPoints: firebase.firestore.FieldValue.increment(generatePoints(questions)),
+								localPoints: firebase.firestore.FieldValue.increment(generatePoints(questions)),
 								qComplete4: true
 							});
 						}
