@@ -13,7 +13,7 @@ function getPoints() {
         setTimeout(() => {
             allUserPoints.sort(function (a, b) { return b - a });
             resolve(allUserPoints);
-        }, 600);
+        }, 1000);
     });
 };
 
