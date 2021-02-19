@@ -1,4 +1,5 @@
 # V-RUS
+[Github link](https://kangggx.github.io/Integrated-Project/index.html)
 
 The website features a statistical map of the current COVID-19 pandemic around the world, where users are able to interact with it and view the selected country's COVID-19 cases. There is also a linear chart where users are able to see the peak cases of the country since January 2020.
 
