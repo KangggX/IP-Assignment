@@ -102,7 +102,7 @@ const quiz4 = [
             c: "Surgical Masks",
             d: "Scuba Masks"
 		},
-		correctAnswer: "a"
+		correctAnswer: "c"
 	},
     {
 		question: "Which of the following is an example of Social Distancing?",
