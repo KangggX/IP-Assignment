@@ -304,6 +304,10 @@ h2.heading-title {
     overflow: hidden;
 }
 
+.choice__option:hover {
+    cursor: pointer;
+}
+
 .option__letter {
     color: #fff;
     background-color: #0084F5;
