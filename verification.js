@@ -132,9 +132,7 @@ firebase.auth().onAuthStateChanged(function (user) {
                         name: `${localStorage["username"]}`,
                         userID: `${localStorage["user-id"]}`
                     });
-                };setTimeout(() => {
-                location.href = "index.html";
-            }, 1000); 
+                };
             });
         }, 1000);
 
