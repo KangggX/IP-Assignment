@@ -305,6 +305,13 @@ h2.heading-title {
     font-weight: 500;
 }
 
+.quiz__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
 .render--box {
     color: #fff;
     background-color: #001F39;
@@ -413,6 +420,11 @@ h2.heading-title {
     cursor: pointer;
 }
 
+button#submit {
+    border: none;
+    border-radius: 3px;
+    padding: 10px 20px;
+}
 
 
 
@@ -511,12 +523,12 @@ h2.heading-title {
     border-radius: 3px;
     max-width: 330px;
     margin: 0 auto;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     overflow-wrap: break-word;
 }
 
 .item__title {
-    margin-bottom: 5px;
+    margin-bottom: 15px;
 }
 
 .item__desc {
