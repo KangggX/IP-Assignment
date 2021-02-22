@@ -16,14 +16,9 @@ In particular, as part of this section we recommend that you provide a list of U
 - As a gamer, I would like to complete the quizzes, so that I can see my usernmae at the top of the leaderboard.
 - As a general user, I would like to explore the website and do some quizzes, so that I can understand the website better.
 
-This section is also where you would share links to any wireframes, mockups, diagrams etc. that you created as part of the design process. 
-These files should themselves either be included as a pdf file in the project itself (in an separate directory)
-Include the Adobe XD wireframe as a folder. You can include the XD share url. 
+[Adobe XD Prototype](https://xd.adobe.com/view/b8328fdd-5fc2-4fe5-ace0-753a355e69bb-ed61/)
 
-## Features
-
-In this section, you should go over the different parts of your project, and describe each in a sentence or so.
- 
+## Features 
 ### Existing Features
 - Feature 1 - Allow users to gain points by completing quizzes with correct answers
 - Feature 2 - Allow users to see the COVID-19 cases per country by navigating to the statistics page
@@ -31,6 +26,7 @@ In this section, you should go over the different parts of your project, and des
 
 ### Features to implement in the future
 - A quick tip section for user to help with their quiz answers.
+- A quick GUI for users to see the points they have left after spending them in the shop.
 
 ## Technologies Used
 - [JQuery](https://jquery.com)
